@@ -120,12 +120,117 @@
         "button_link": "",
         "swipe_on_mobile": false
       }
+    },
+    "1625147953224dcf8e": {
+      "type": "featured-blog",
+      "blocks": {
+        "1625147953224dcf8e-0": {
+          "type": "title",
+          "settings": {
+            "show_date": true,
+            "show_author": false
+          }
+        },
+        "1625147953224dcf8e-1": {
+          "type": "summary",
+          "settings": {
+          }
+        },
+        "1625147953224dcf8e-2": {
+          "type": "link",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "1625147953224dcf8e-0",
+        "1625147953224dcf8e-1",
+        "1625147953224dcf8e-2"
+      ],
+      "settings": {
+        "heading": "Blog posts",
+        "blog": "news",
+        "post_limit": 3,
+        "show_view_all": true,
+        "show_image": true,
+        "soft_background": false
+      }
+    },
+    "1625148095014a09cb": {
+      "type": "collection-list",
+      "blocks": {
+        "1625148095014a09cb-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "1625148095014a09cb-2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "1625148095014a09cb-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        }
+      },
+      "block_order": [
+        "1625148095014a09cb-1",
+        "1625148095014a09cb-2",
+        "1625148095014a09cb-0"
+      ],
+      "settings": {
+        "title": "Collections",
+        "image_ratio": "square",
+        "color_scheme": "background-1",
+        "swipe_on_mobile": false,
+        "image_padding": false,
+        "show_view_all": false
+      }
+    },
+    "1625148135178a2dc6": {
+      "type": "newsletter",
+      "blocks": {
+        "1625148135178a2dc6-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Subscribe to our emails"
+          }
+        },
+        "1625148135178a2dc6-1": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "<p>Be the first to know about new collections and exclusive offers.<\/p>"
+          }
+        },
+        "1625148135178a2dc6-2": {
+          "type": "email_form",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "1625148135178a2dc6-0",
+        "1625148135178a2dc6-1",
+        "1625148135178a2dc6-2"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "full_width": true
+      }
     }
   },
   "order": [
     "image_banner",
     "featured_products",
     "image_text",
-    "16250611313b0ba54a"
+    "16250611313b0ba54a",
+    "1625147953224dcf8e",
+    "1625148095014a09cb",
+    "1625148135178a2dc6"
   ]
 }
