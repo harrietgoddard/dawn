@@ -195,6 +195,11 @@
     "1625148135178a2dc6": {
       "type": "newsletter",
       "blocks": {
+        "1625148135178a2dc6-2": {
+          "type": "email_form",
+          "settings": {
+          }
+        },
         "1625148135178a2dc6-0": {
           "type": "heading",
           "settings": {
@@ -206,17 +211,12 @@
           "settings": {
             "paragraph": "<p>Be the first to know about new collections and exclusive offers.<\/p>"
           }
-        },
-        "1625148135178a2dc6-2": {
-          "type": "email_form",
-          "settings": {
-          }
         }
       },
       "block_order": [
+        "1625148135178a2dc6-2",
         "1625148135178a2dc6-0",
-        "1625148135178a2dc6-1",
-        "1625148135178a2dc6-2"
+        "1625148135178a2dc6-1"
       ],
       "settings": {
         "color_scheme": "background-1",
