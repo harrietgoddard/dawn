@@ -6,20 +6,22 @@
 
 <div class="eight-container--{{ section.id }}" style="padding: 20px; display: flex; flex-direction: column; align-items: center">
   <h1>Eight</h1>
-  {% if section.settings.text != blank %}
-    <p>{{ section.settings.text }}</p>
-  {% endif %}
   {% if section.settings.image != blank %}
     <img src="{{ section.settings.image | img_url }}" alt="{{ section.settings.image.alt }}">
   {% endif %}
-  {% if section.settings.link != blank %}
-    <a 
-      href="{{ section.settings.link }}"
-      style="width: 200px; padding: 10px; margin: 20px 0; text-align: center; background: black; color: white; text-decoration: none;"
-    >
-      {{ section.settings.link_text}}
-    </a>
-  {% endif %}
+  {% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'text' %}
+      <p>{{ block.settings.text }}</p>
+    {% when 'button' %}
+      <a 
+        href="{{ block.settings.link }}"
+        style="width: 200px; padding: 10px; margin: 20px 0; text-align: center; background: black; color: white; text-decoration: none;"
+      >
+        {{ block.settings.link_text}}
+      </a>
+    {% endcase %}
+  {% endfor %}
 </div>
 
 {% schema %}
@@ -28,24 +30,9 @@
   "tag": "section",
   "settings": [
     {
-      "type": "text",
-      "id": "text",
-      "label": "Text"
-    },
-    {
       "type": "image_picker",
       "id": "image",
       "label": "Image"
-    },
-    {
-      "type": "url",
-      "id": "link",
-      "label": "Button"
-    },
-    {
-      "type": "text",
-      "id": "link_text",
-      "label": "Button text"
     },
     {
       "type": "color",
@@ -53,9 +40,50 @@
       "label": "Background color"
     }
   ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Text content"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Button text",
+          "default": "Shop all"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Eight's preset name"
+      "name": "Eight's preset name",
+      "blocks": [
+        {
+          "type": "text"
+        },
+        {
+          "type": "button"
+        }
+      ]
     }
   ]
 }
