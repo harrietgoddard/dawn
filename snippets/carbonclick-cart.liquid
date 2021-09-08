@@ -1,104 +1,104 @@
 
 {% if content_for_header contains 'carbon.click' or content_for_header contains 'carbonclick'  %}
 
+
 {% comment %}
 
 	Carbonclick.com
 
-	version 3.0.10
+	version 3.2.0
 
 	Do not modify this file. This file is auto generated and may be overwritten
 
 {% endcomment %}
-{% assign version = '3.0.10' %}
+
+{% liquid
+
+  assign version = '3.2.0'
+  
+  assign carbonclick = shop.metafields.carbonclick['settings']
+  assign product = all_products['cc-carbon-offset']
+
+  assign variant = product.variants.first
 
 
-{% assign carbonclick = shop.metafields.carbonclick['settings'] %}
-{% assign product = all_products['cc-carbon-offset'] %}
-
-{% assign is_full_widget = true %}
-{% if type == 'compressed' or type == 'mini' %}
-  {% assign is_full_widget = false %}
-{% endif %}
-
-{% if position == blank %}
-    {% assign position = 'beforebegin' %}
-{% endif %}
+  assign images_path = 'https://shopify-web.carbon.click/images/'
+  assign logo_image_path = images_path | append: 'carbonclick-logo-' | append: carbonclick.carbonclick_logo | append: '.svg'
 
 
-{% if delay == blank %}
-    {% assign delay = 0 %}
-{% endif %}
+  
+  if type == 'compressed' or type == 'mini'
+    assign is_full_widget = false
+  else
+    assign is_full_widget = true
+  endif
+  
+  
+  assign cart_item = cart.items | where: 'product_id', product.id | first
+
+  if cart_item != blank
+    assign offset_added = true
+  else
+    assign offset_added = false
+  endif
+    
+  assign widget_enabled = carbonclick.enabled
+
+  assign offset_index = carbonclick.offset_amount | minus: 1
 
 
+  if money_mode == 'decimal'
+    assign offset_price = variant.price | money
+  else
+    assign offset_price = variant.price | money_without_trailing_zeros
+  endif
+
+  if offset_added
+    unless type == 'mini'
+      assign button_text = carbonclick.thank_you_text | default: 'Thank you!'
+    endunless
+  else
+	  assign button_text = offset_price | prepend: '<span class="money">' | append: '</span>'
+  endif
 
 
+  if product.metafields.carbonclick.impact
+
+    if carbonclick.show_merchant_impact == true
+  	  assign impact = product.metafields.carbonclick.merchant_impact
+    else
+	    assign impact = product.metafields.carbonclick.impact
+    endif
+    
+    assign impact_unit = impact.carbonOffsetImpact['unit']
+
+    assign impact_value_kg = impact.carbonOffsetImpact['value']
 
 
-{% assign offset_added = false %}
+    case variant.weight_unit
+      when 'lb' or 'oz'
+        assign impact_value_local = impact_value_kg | times: 2.204620 | round
+        assign impact_unit = 'lb'
+      when 'kg' or 'g'
+        assign impact_value_local = impact_value_kg | round
+        assign impact_unit = 'kg'
+      else
+        assign impact_value_local = impact_value_kg | round
+        assign impact_unit = 'kg'
+    endcase
+
+  endif
+
+
+  
+
+  
+%}
+
+
 
 
 {% unless product == blank %}
-
-
-{% assign images_path = 'https://shopify-web.carbon.click/images/' %}
-
-{% assign logo_image_path = images_path | append: 'carbonclick-logo-' | append: carbonclick.carbonclick_logo | append: '.svg' %}
-
-
-{% for line_item in cart.items %}
-	
-	{% if line_item.product_id == product.id %}
-		{% assign offset_added = true %}
-		{% break %}
-    {% endif %}
-
-{% endfor %}
-
-
-{% assign widget_enabled = carbonclick.enabled %}
-
-{% assign offset_index = carbonclick.offset_amount | minus: 1 %}
-
-{% assign variant = product.variants.first %}
-
-
-{% if money_mode == 'decimal' %}
-  {% capture offset_price_text %}<span class="money">{{ variant.price | money }}</span>{% endcapture %}
-{% else %}
-  {% capture offset_price_text %}<span class="money">{{ variant.price | money_without_trailing_zeros }}</span>{% endcapture %}
-{% endif %}
-
-{% if offset_added %}
-  {% unless type == 'mini' %}
-    {% assign button_text = 'Thank you!' %}
-  {% endunless %}
-{% else %}
-	{% assign button_text = offset_price_text %}
-{% endif %}
-
-
-{% if product.metafields.carbonclick.impact %}
-
-  {% assign impact = product.metafields.carbonclick.impact %}
-          
-  {% assign impact_unit = impact.carbonOffsetImpact['unit'] %}
-
-  {% assign impact_value_kg = impact.carbonOffsetImpact['value'] %}
-
-
-  {% case variant.weight_unit %}
-    {% when 'lb' or 'oz' %}
-      {% assign impact_value_local = impact_value_kg | times: 2.204620 | round  %}
-      {% assign impact_unit = 'lb'  %}
-    {% when 'kg' or 'g' %}
-      {% assign impact_value_local = impact_value_kg | round %}
-      {% assign impact_unit = 'kg'  %}
-    {% else %}
-      
-  {% endcase %}
-
-{% endif %}
 
 
 
@@ -713,13 +713,13 @@
   data-controller="climate-friendly"
   data-climate-friendly-placement="{{ placement }}"
   data-climate-friendly-meta="{{ product.metafields.carbonclick['meta'] | json | escape }}"
-  data-climate-friendly-placement-position="{{ position }}"
+  data-climate-friendly-placement-position="{{ position | default: 'beforebegin' }}"
   data-climate-friendly-shop="{{ shop.permanent_domain }}"
   data-climate-friendly-enabled="{{ carbonclick.enabled }}"
   data-climate-friendly-type="{{ type }}"
   data-climate-friendly-cart-count="{{ cart.item_count }}"
   data-climate-friendly-variant-id="{{ variant.id }}"
-  data-climate-friendly-delay="{{ delay }}"
+  data-climate-friendly-delay="{{ delay | default: 0 }}"
   data-climate-friendly-open-on-reload="{{ open_on_reload }}"
   data-climate-friendly-is-offset-added="{% if offset_added %}true{% else %}false{% endif %}"
 >
@@ -732,12 +732,12 @@
     
     
     <div class="cc-content-title">
-      Reduce the carbon footprint of your purchase with <a href="https://carbonclick.com" target="_blank">{{ logo_image_path | img_tag: 'carbonclick', 'cc-logo-inline' }}</a>
+      {{ carbonclick.headline_text | default: 'Reduce the carbon footprint of your purchase with' }} <a href="https://carbonclick.com" target="_blank">{{ logo_image_path | img_tag: 'carbonclick', 'cc-logo-inline' }}</a>
     </div>
     
     
     {% if is_full_widget %}
-      <a id="cc-learn-more" href="#" class="cc-link" data-action="click->climate-friendly#more">Learn More <i class="cc-angle-down"></i></a>
+      <a id="cc-learn-more" href="#" class="cc-link" data-action="click->climate-friendly#more">{{ carbonclick.learn_more_text | default: 'Learn More' }} <i class="cc-angle-down"></i></a>
     {% endif %}
 
 
@@ -764,21 +764,21 @@
 
         <div class="cc-tagline">
           {{ green_tick_svg }}
-          Support projects that fight climate change.
+          {{ carbonclick.projects_text | default: 'Support projects that fight climate change.' }}
         </div>
 
-        <h5>Help fund:</h5>
+        <h5>{{ carbonclick.fund_text | default: 'Help fund:' }}</h5>
 
 
         <div class="row cc-help-fund">
           <div class="col-xs-12 col-sm-5 cc-help-fund__item">
             {{ planter_svg }}
-            <div>Native Forest Regeneration</div>
+            <div>{{ carbonclick.project_1_text | default: 'Native Forest Regeneration' }}</div>
           </div>
 
           <div class="col-xs-12 col-sm-5 cc-help-fund__item">
             {{ windmill_svg }}
-            <div>International Renewable Energy Projects</div>
+            <div>{{ carbonclick.project_2_text | default: 'International Renewable Energy Projects' }} </div>
           </div>
         </div>
 
@@ -786,25 +786,25 @@
       <div class="cc-stats-container">
         <div class="cc-tagline">
           {{ green_tick_svg }}
-          Play a part in protecting our planet.
+          {{ carbonclick.protecting_text | default: 'Play a part in protecting our planet.' }}
         </div>
         {% if product.metafields.carbonclick.impact %}
-        <h5>Add to our movement:</h5>
+        <h5>{{ carbonclick.movement_text | default: 'Add to our movement:' }}</h5>
         <ul class="cc-stats">
           
           
           <li class="cc-stat">
-            <span class="cc-stat-name">{{ contributors_svg }} Contributors</span>
+            <span class="cc-stat-name">{{ contributors_svg }} {{ carbonclick.contributors_text | default: 'Contributors' }}</span>
             <span class="cc-stat-number">{{ impact.contributorImpact['value'] | times: 100 | money_without_currency | remove: '.00' }}</span>
           </li>
 
           <li class="cc-stat">
-            <span class="cc-stat-name">{{ tree_svg }} Trees Planted</span>
+            <span class="cc-stat-name">{{ tree_svg }} {{ carbonclick.trees_planted_text | default: 'Trees Planted' }}</span>
             <span class="cc-stat-number">{{ impact.treeImpact['value'] | times: 100 | money_without_currency | remove: '.00' }}</span>
           </li>
 
           <li class="cc-stat">
-            <span class="cc-stat-name">{{ cloud_svg_2 }} CO2 Saved ({{ impact_unit }})</span>
+            <span class="cc-stat-name">{{ cloud_svg_2 }} {{ carbonclick.co2_saved_text | default: 'CO2 Saved' }} ({{ impact_unit }})</span>
             <span class="cc-stat-number">{{ impact_value_local | times: 100 | money_without_currency | remove: '.00' }}</span>
           </li>
         </ul>
@@ -813,7 +813,7 @@
       </div>
     </div>
     <div class="cc-dropdown-bottom">
-      Powered by {{ logo_image_path | img_tag: 'carbonclick', 'cc-logo-inline' }}
+      {{ carbonclick.powered_by_text | default: 'Powered by' }} {{ logo_image_path | img_tag: 'carbonclick', 'cc-logo-inline' }}
     </div>
   </div>    
   {% endunless %} 
