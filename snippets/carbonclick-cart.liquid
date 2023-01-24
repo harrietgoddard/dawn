@@ -6,7 +6,7 @@
 
 	Carbonclick.com
 
-	version 3.3.0
+	version 4.0.0
 
 	Do not modify this file. This file is auto generated and may be overwritten
 
@@ -14,9 +14,9 @@
 
 {% liquid
 
-  assign version = '3.3.0'
+  assign version = '4.0.0'
   
-  assign carbonclick = shop.metafields.carbonclick['settings']
+  assign carbonclick = shop.metafields.carbonclick['settings'].value
   assign product = all_products['cc-carbon-offset']
 
   assign variant = product.variants.first
@@ -58,16 +58,16 @@
       assign button_text = carbonclick.thank_you_text | default: 'Thank you!'
     endunless
   else
-	  assign button_text = offset_price | prepend: '<span class="money">' | append: '</span>'
+    assign button_text = offset_price | prepend: '<span class="money">' | append: '</span>'
   endif
 
 
   if product.metafields.carbonclick.impact
 
     if carbonclick.show_merchant_impact == true
-  	  assign impact = product.metafields.carbonclick.merchant_impact
+      assign impact = product.metafields.carbonclick.merchant_impact.value
     else
-	    assign impact = product.metafields.carbonclick.impact
+      assign impact = product.metafields.carbonclick.impact.value
     endif
     
     assign impact_unit = impact.carbonOffsetImpact['unit']
@@ -94,8 +94,7 @@
 
   
 %}
-
-
+ 
 
 
 {% unless product == blank %}
@@ -155,67 +154,67 @@
 {%- capture windmill_svg -%}
 <svg class="windmill_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 407.6 285.8" style="enable-background:new 0 0 407.6 285.8;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill: {{ carbonclick.plugin_icons_colour }}; }
+  .st0{fill: {{ carbonclick.plugin_icons_colour }}; }
     .windmill_svg .st0{stroke: {{ carbonclick.plugin_icons_colour }} !important; stroke-width: 1 !important;  }
 </style>
 <g>
-	<g>
-		<g>
-			<path class="st0" d="M211.6,44.8c-18.2,0-33,14.8-33,33c0,18.2,14.8,33,33,33c18.2,0,33-14.8,33-33S229.8,44.8,211.6,44.8z      M211.6,102.5c-13.7,0-24.8-11.1-24.8-24.8c0-13.7,11.1-24.7,24.8-24.8c13.7,0,24.8,11.1,24.8,24.8S225.2,102.5,211.6,102.5z"/>
-		</g>
-	</g>
-	<g>
-		<g>
-			<rect x="207.4" y="24.1" class="st0" width="8.3" height="12.4"/>
-		</g>
-	</g>
-	<g>
-		<g>
-			<rect x="207.4" y="119" class="st0" width="8.3" height="12.4"/>
-		</g>
-	</g>
-	<g>
-		<g>
-			<rect x="157.9" y="73.6" class="st0" width="12.4" height="8.3"/>
-		</g>
-	</g>
-	<g>
-		<g>
-			<rect x="252.8" y="73.6" class="st0" width="12.4" height="8.3"/>
-		</g>
-	</g>
-	<g>
-		<g>
-			
-				<rect x="173.9" y="38" transform="matrix(0.7071 -0.7071 0.7071 0.7071 20.8689 138.8161)" class="st0" width="8.3" height="12.4"/>
-		</g>
-	</g>
-	<g>
-		<g>
-			
-				<rect x="241" y="105.1" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -6.9237 205.9236)" class="st0" width="8.3" height="12.4"/>
-		</g>
-	</g>
-	<g>
-		<g>
-			
-				<rect x="171.8" y="107.2" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -26.5767 158.4698)" class="st0" width="12.4" height="8.3"/>
-		</g>
-	</g>
-	<g>
-		<g>
-			
-				<rect x="238.9" y="40.1" transform="matrix(0.7071 -0.7071 0.7071 0.7071 40.527 186.2729)" class="st0" width="12.4" height="8.3"/>
-		</g>
-	</g>
-	<g>
-		<g>
-			<path class="st0" d="M239.9,265.6L140.9,84c-0.7-1.3-2.1-2.2-3.6-2.1H21.7c-0.3,0-0.6,0-0.9,0.1c0,0-0.1,0-0.1,0     c-0.4,0.1-0.8,0.3-1.1,0.5c-0.1,0.1-0.2,0.1-0.3,0.2c-0.3,0.3-0.6,0.6-0.9,0.9c-0.1,0.1-0.1,0.2-0.2,0.2     c-0.1,0.2-0.2,0.3-0.2,0.5c-0.1,0.1-0.1,0.2-0.1,0.3c-0.1,0.4-0.2,0.8-0.2,1.2v28.9c0,0.7,0.2,1.4,0.5,2l82.5,152.7     c0.7,1.3,2.1,2.2,3.6,2.2h132c2.3,0,4.1-1.8,4.1-4.1C240.4,266.9,240.3,266.2,239.9,265.6z M204.6,218.1h-27.7l-20.3-37.1h27.7     L204.6,218.1z M105.6,172.7H73.7l-20.3-37.1h31.9L105.6,172.7z M94.7,135.5h27.7l20.3,37.1H115L94.7,135.5z M110.1,180.9     l20.3,37.1H98.5l-20.3-37.1H110.1z M119.5,180.9h27.7l20.3,37.1h-27.7L119.5,180.9z M179.8,172.7h-27.7l-20.3-37.1h27.7     L179.8,172.7z M134.8,90.2l20.3,37.1h-27.7l-20.3-37.1H134.8z M97.7,90.2l20.3,37.1H90.2L70,90.2H97.7z M60.6,90.2l20.3,37.1H49     L28.7,90.2H60.6z M106.7,263.5L25.9,113.9v-11.7l88,161.3H106.7z M123.2,263.5L103,226.3h31.9l20.3,37.1H123.2z M164.5,263.5     l-20.3-37.1H172l20.3,37.1H164.5z M201.6,263.5l-20.3-37.1h27.7l20.3,37.1H201.6z"/>
-		</g>
-	</g>
+  <g>
+    <g>
+      <path class="st0" d="M211.6,44.8c-18.2,0-33,14.8-33,33c0,18.2,14.8,33,33,33c18.2,0,33-14.8,33-33S229.8,44.8,211.6,44.8z      M211.6,102.5c-13.7,0-24.8-11.1-24.8-24.8c0-13.7,11.1-24.7,24.8-24.8c13.7,0,24.8,11.1,24.8,24.8S225.2,102.5,211.6,102.5z"/>
+    </g>
+  </g>
+  <g>
+    <g>
+      <rect x="207.4" y="24.1" class="st0" width="8.3" height="12.4"/>
+    </g>
+  </g>
+  <g>
+    <g>
+      <rect x="207.4" y="119" class="st0" width="8.3" height="12.4"/>
+    </g>
+  </g>
+  <g>
+    <g>
+      <rect x="157.9" y="73.6" class="st0" width="12.4" height="8.3"/>
+    </g>
+  </g>
+  <g>
+    <g>
+      <rect x="252.8" y="73.6" class="st0" width="12.4" height="8.3"/>
+    </g>
+  </g>
+  <g>
+    <g>
+      
+        <rect x="173.9" y="38" transform="matrix(0.7071 -0.7071 0.7071 0.7071 20.8689 138.8161)" class="st0" width="8.3" height="12.4"/>
+    </g>
+  </g>
+  <g>
+    <g>
+      
+        <rect x="241" y="105.1" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -6.9237 205.9236)" class="st0" width="8.3" height="12.4"/>
+    </g>
+  </g>
+  <g>
+    <g>
+      
+        <rect x="171.8" y="107.2" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -26.5767 158.4698)" class="st0" width="12.4" height="8.3"/>
+    </g>
+  </g>
+  <g>
+    <g>
+      
+        <rect x="238.9" y="40.1" transform="matrix(0.7071 -0.7071 0.7071 0.7071 40.527 186.2729)" class="st0" width="12.4" height="8.3"/>
+    </g>
+  </g>
+  <g>
+    <g>
+      <path class="st0" d="M239.9,265.6L140.9,84c-0.7-1.3-2.1-2.2-3.6-2.1H21.7c-0.3,0-0.6,0-0.9,0.1c0,0-0.1,0-0.1,0     c-0.4,0.1-0.8,0.3-1.1,0.5c-0.1,0.1-0.2,0.1-0.3,0.2c-0.3,0.3-0.6,0.6-0.9,0.9c-0.1,0.1-0.1,0.2-0.2,0.2     c-0.1,0.2-0.2,0.3-0.2,0.5c-0.1,0.1-0.1,0.2-0.1,0.3c-0.1,0.4-0.2,0.8-0.2,1.2v28.9c0,0.7,0.2,1.4,0.5,2l82.5,152.7     c0.7,1.3,2.1,2.2,3.6,2.2h132c2.3,0,4.1-1.8,4.1-4.1C240.4,266.9,240.3,266.2,239.9,265.6z M204.6,218.1h-27.7l-20.3-37.1h27.7     L204.6,218.1z M105.6,172.7H73.7l-20.3-37.1h31.9L105.6,172.7z M94.7,135.5h27.7l20.3,37.1H115L94.7,135.5z M110.1,180.9     l20.3,37.1H98.5l-20.3-37.1H110.1z M119.5,180.9h27.7l20.3,37.1h-27.7L119.5,180.9z M179.8,172.7h-27.7l-20.3-37.1h27.7     L179.8,172.7z M134.8,90.2l20.3,37.1h-27.7l-20.3-37.1H134.8z M97.7,90.2l20.3,37.1H90.2L70,90.2H97.7z M60.6,90.2l20.3,37.1H49     L28.7,90.2H60.6z M106.7,263.5L25.9,113.9v-11.7l88,161.3H106.7z M123.2,263.5L103,226.3h31.9l20.3,37.1H123.2z M164.5,263.5     l-20.3-37.1H172l20.3,37.1H164.5z M201.6,263.5l-20.3-37.1h27.7l20.3,37.1H201.6z"/>
+    </g>
+  </g>
 </g>
 <g id="surface1">
-	<path class="st0" d="M211.6,165.2c3.1,0.4,6.2,0.6,9.3,0.6c30.5,0,61.2-17.1,73.1-24.5l-14.9,130.9H326L311.2,142   c12.5,8.5,43.7,27.2,74.6,27.2c2,0,4,0,6-0.2l2-0.2l1.8-4l-1.2-1.6c-23.3-29.9-70.5-40.5-79.8-42.3c-0.6-1.2-1.3-2.4-2.2-3.4   c2-9.2,11.4-56.7-6.7-90.1l-0.9-1.8h-4.4l-1,1.8c-18,33.4-8.7,80.9-6.7,90.1c-0.8,0.9-1.5,1.8-2,2.9c-9.3,1.4-57,10-81.5,38.9   l-1.3,1.5l1.6,4.1L211.6,165.2z M315.7,128c11.7,2.6,48.3,12.2,69.3,34.5c-30.7-0.4-62.5-20.8-72.3-27.7   C314.3,132.9,315.4,130.5,315.7,128L315.7,128z M302.6,132.8c-3.6,0-6.5-2.9-6.5-6.5c0-3.6,2.9-6.5,6.5-6.5c3.6,0,6.5,2.9,6.5,6.5   c0,0,0,0,0,0C309.1,129.9,306.2,132.8,302.6,132.8L302.6,132.8z M318.6,265.4h-31.8l0.8-7.5h30.1L318.6,265.4z M288.3,251.3   L301,139.5c0.5,0.1,1.1,0.1,1.6,0.2c0.5,0,1.1,0,1.6-0.1l12.7,111.8H288.3z M302.6,36.5c11.9,28.1,6.1,65.4,3.7,77.2   c-2.4-0.7-5-0.7-7.5,0c-2.3-11.8-8.1-49.1,3.8-77.4L302.6,36.5z M289.5,127.4c0.2,2.5,1.2,5,2.7,7c-9.9,6.3-41.3,24.6-71.4,24.6   h-2.1C240.8,137.6,277.7,129.6,289.5,127.4z"/>
+  <path class="st0" d="M211.6,165.2c3.1,0.4,6.2,0.6,9.3,0.6c30.5,0,61.2-17.1,73.1-24.5l-14.9,130.9H326L311.2,142   c12.5,8.5,43.7,27.2,74.6,27.2c2,0,4,0,6-0.2l2-0.2l1.8-4l-1.2-1.6c-23.3-29.9-70.5-40.5-79.8-42.3c-0.6-1.2-1.3-2.4-2.2-3.4   c2-9.2,11.4-56.7-6.7-90.1l-0.9-1.8h-4.4l-1,1.8c-18,33.4-8.7,80.9-6.7,90.1c-0.8,0.9-1.5,1.8-2,2.9c-9.3,1.4-57,10-81.5,38.9   l-1.3,1.5l1.6,4.1L211.6,165.2z M315.7,128c11.7,2.6,48.3,12.2,69.3,34.5c-30.7-0.4-62.5-20.8-72.3-27.7   C314.3,132.9,315.4,130.5,315.7,128L315.7,128z M302.6,132.8c-3.6,0-6.5-2.9-6.5-6.5c0-3.6,2.9-6.5,6.5-6.5c3.6,0,6.5,2.9,6.5,6.5   c0,0,0,0,0,0C309.1,129.9,306.2,132.8,302.6,132.8L302.6,132.8z M318.6,265.4h-31.8l0.8-7.5h30.1L318.6,265.4z M288.3,251.3   L301,139.5c0.5,0.1,1.1,0.1,1.6,0.2c0.5,0,1.1,0,1.6-0.1l12.7,111.8H288.3z M302.6,36.5c11.9,28.1,6.1,65.4,3.7,77.2   c-2.4-0.7-5-0.7-7.5,0c-2.3-11.8-8.1-49.1,3.8-77.4L302.6,36.5z M289.5,127.4c0.2,2.5,1.2,5,2.7,7c-9.9,6.3-41.3,24.6-71.4,24.6   h-2.1C240.8,137.6,277.7,129.6,289.5,127.4z"/>
 </g>
 </svg>
 {%- endcapture -%}
@@ -719,7 +718,7 @@
   class="{{ type }}"
   data-controller="climate-friendly"
   data-climate-friendly-placement="{{ placement }}"
-  data-climate-friendly-meta="{{ product.metafields.carbonclick['meta'] | json | escape }}"
+  data-climate-friendly-meta="{{ product.metafields.value.carbonclick['meta'] | json | escape }}"
   data-climate-friendly-placement-position="{{ position | default: 'beforebegin' }}"
   data-climate-friendly-shop="{{ shop.permanent_domain }}"
   data-climate-friendly-enabled="{{ carbonclick.enabled }}"
